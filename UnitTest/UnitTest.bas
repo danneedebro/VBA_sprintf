@@ -239,3 +239,165 @@ Sub UnitTestSprintf()
     Debug.Print ""
     
 End Sub
+
+
+
+
+
+Sub UnitTestGetFormatSpecProperty()
+
+    Dim s As New ResourceSprintf
+    Dim FormatStr As String
+    
+    FormatStr = "%s"
+    Debug.Print ""
+    Debug.Print "Format string """ & FormatStr & Chr(34); " " & IIf(s.GetFormatSpecProperty(FormatStr, Invalid), "is NOT a valid formatSpec", "is a valid formatSpec with") & " the following properties:"
+    Debug.Print "   " & ".Invalid=" & s.GetFormatSpecProperty(FormatStr, Invalid)
+    Debug.Print "   " & ".ConversionChar=" & Chr(34) & s.GetFormatSpecProperty(FormatStr, ConversionChar) & Chr(34)
+    Debug.Print "   " & ".Fieldwidth=" & s.GetFormatSpecProperty(FormatStr, Fieldwidth)
+    Debug.Print "   " & ".Precision=" & s.GetFormatSpecProperty(FormatStr, Precision)
+    Debug.Print "   " & ".FlagLeftAlign=" & s.GetFormatSpecProperty(FormatStr, FlagLeftAlign)
+    Debug.Print "   " & ".FlagLeadingZeros=" & s.GetFormatSpecProperty(FormatStr, FlagLeadingZeros)
+    Debug.Print "   " & ".FlagSign=" & s.GetFormatSpecProperty(FormatStr, FlagSign)
+    Debug.Print "   " & ".FlagSpace=" & s.GetFormatSpecProperty(FormatStr, FlagSpace)
+    Debug.Print "   " & ".FlagHash=" & s.GetFormatSpecProperty(FormatStr, FlagHash)
+    Debug.Print "   " & ".Identifier=" & s.GetFormatSpecProperty(FormatStr, Identifier)
+    Debug.Print "   " & ".Identifier=" & Chr(34) & s.GetFormatSpecProperty(FormatStr, PadChar) & Chr(34)
+    
+    
+    FormatStr = "%d"
+    Debug.Print ""
+    Debug.Print "Format string """ & FormatStr & Chr(34); " " & IIf(s.GetFormatSpecProperty(FormatStr, Invalid), "is NOT a valid formatSpec", "is a valid formatSpec with") & " the following properties:"
+    Debug.Print "   " & ".Invalid=" & s.GetFormatSpecProperty(FormatStr, Invalid)
+    Debug.Print "   " & ".ConversionChar=" & Chr(34) & s.GetFormatSpecProperty(FormatStr, ConversionChar) & Chr(34)
+    Debug.Print "   " & ".Fieldwidth=" & s.GetFormatSpecProperty(FormatStr, Fieldwidth)
+    Debug.Print "   " & ".Precision=" & s.GetFormatSpecProperty(FormatStr, Precision)
+    Debug.Print "   " & ".FlagLeftAlign=" & s.GetFormatSpecProperty(FormatStr, FlagLeftAlign)
+    Debug.Print "   " & ".FlagLeadingZeros=" & s.GetFormatSpecProperty(FormatStr, FlagLeadingZeros)
+    Debug.Print "   " & ".FlagSign=" & s.GetFormatSpecProperty(FormatStr, FlagSign)
+    Debug.Print "   " & ".FlagSpace=" & s.GetFormatSpecProperty(FormatStr, FlagSpace)
+    Debug.Print "   " & ".FlagHash=" & s.GetFormatSpecProperty(FormatStr, FlagHash)
+    Debug.Print "   " & ".Identifier=" & s.GetFormatSpecProperty(FormatStr, Identifier)
+    Debug.Print "   " & ".Identifier=" & Chr(34) & s.GetFormatSpecProperty(FormatStr, PadChar) & Chr(34)
+    
+    FormatStr = "%f"
+    Debug.Print ""
+    Debug.Print "Format string """ & FormatStr & Chr(34); " " & IIf(s.GetFormatSpecProperty(FormatStr, Invalid), "is NOT a valid formatSpec", "is a valid formatSpec with") & " the following properties:"
+    Debug.Print "   " & ".Invalid=" & s.GetFormatSpecProperty(FormatStr, Invalid)
+    Debug.Print "   " & ".ConversionChar=" & Chr(34) & s.GetFormatSpecProperty(FormatStr, ConversionChar) & Chr(34)
+    Debug.Print "   " & ".Fieldwidth=" & s.GetFormatSpecProperty(FormatStr, Fieldwidth)
+    Debug.Print "   " & ".Precision=" & s.GetFormatSpecProperty(FormatStr, Precision)
+    Debug.Print "   " & ".FlagLeftAlign=" & s.GetFormatSpecProperty(FormatStr, FlagLeftAlign)
+    Debug.Print "   " & ".FlagLeadingZeros=" & s.GetFormatSpecProperty(FormatStr, FlagLeadingZeros)
+    Debug.Print "   " & ".FlagSign=" & s.GetFormatSpecProperty(FormatStr, FlagSign)
+    Debug.Print "   " & ".FlagSpace=" & s.GetFormatSpecProperty(FormatStr, FlagSpace)
+    Debug.Print "   " & ".FlagHash=" & s.GetFormatSpecProperty(FormatStr, FlagHash)
+    Debug.Print "   " & ".Identifier=" & s.GetFormatSpecProperty(FormatStr, Identifier)
+    Debug.Print "   " & ".Identifier=" & Chr(34) & s.GetFormatSpecProperty(FormatStr, PadChar) & Chr(34)
+
+    FormatStr = "%.4f"
+    Debug.Print ""
+    Debug.Print "Format string """ & FormatStr & Chr(34); " " & IIf(s.GetFormatSpecProperty(FormatStr, Invalid), "is NOT a valid formatSpec", "is a valid formatSpec with") & " the following properties:"
+    Debug.Print "   " & ".Invalid=" & s.GetFormatSpecProperty(FormatStr, Invalid)
+    Debug.Print "   " & ".ConversionChar=" & Chr(34) & s.GetFormatSpecProperty(FormatStr, ConversionChar) & Chr(34)
+    Debug.Print "   " & ".Fieldwidth=" & s.GetFormatSpecProperty(FormatStr, Fieldwidth)
+    Debug.Print "   " & ".Precision=" & s.GetFormatSpecProperty(FormatStr, Precision)
+    Debug.Print "   " & ".FlagLeftAlign=" & s.GetFormatSpecProperty(FormatStr, FlagLeftAlign)
+    Debug.Print "   " & ".FlagLeadingZeros=" & s.GetFormatSpecProperty(FormatStr, FlagLeadingZeros)
+    Debug.Print "   " & ".FlagSign=" & s.GetFormatSpecProperty(FormatStr, FlagSign)
+    Debug.Print "   " & ".FlagSpace=" & s.GetFormatSpecProperty(FormatStr, FlagSpace)
+    Debug.Print "   " & ".FlagHash=" & s.GetFormatSpecProperty(FormatStr, FlagHash)
+    Debug.Print "   " & ".Identifier=" & s.GetFormatSpecProperty(FormatStr, Identifier)
+    Debug.Print "   " & ".Identifier=" & Chr(34) & s.GetFormatSpecProperty(FormatStr, PadChar) & Chr(34)
+    
+    FormatStr = "%5.4f"
+    Debug.Print ""
+    Debug.Print "Format string """ & FormatStr & Chr(34); " " & IIf(s.GetFormatSpecProperty(FormatStr, Invalid), "is NOT a valid formatSpec", "is a valid formatSpec with") & " the following properties:"
+    Debug.Print "   " & ".Invalid=" & s.GetFormatSpecProperty(FormatStr, Invalid)
+    Debug.Print "   " & ".ConversionChar=" & Chr(34) & s.GetFormatSpecProperty(FormatStr, ConversionChar) & Chr(34)
+    Debug.Print "   " & ".Fieldwidth=" & s.GetFormatSpecProperty(FormatStr, Fieldwidth)
+    Debug.Print "   " & ".Precision=" & s.GetFormatSpecProperty(FormatStr, Precision)
+    Debug.Print "   " & ".FlagLeftAlign=" & s.GetFormatSpecProperty(FormatStr, FlagLeftAlign)
+    Debug.Print "   " & ".FlagLeadingZeros=" & s.GetFormatSpecProperty(FormatStr, FlagLeadingZeros)
+    Debug.Print "   " & ".FlagSign=" & s.GetFormatSpecProperty(FormatStr, FlagSign)
+    Debug.Print "   " & ".FlagSpace=" & s.GetFormatSpecProperty(FormatStr, FlagSpace)
+    Debug.Print "   " & ".FlagHash=" & s.GetFormatSpecProperty(FormatStr, FlagHash)
+    Debug.Print "   " & ".Identifier=" & s.GetFormatSpecProperty(FormatStr, Identifier)
+    Debug.Print "   " & ".Identifier=" & Chr(34) & s.GetFormatSpecProperty(FormatStr, PadChar) & Chr(34)
+
+    FormatStr = "%-+05.4f"
+    Debug.Print ""
+    Debug.Print "Format string """ & FormatStr & Chr(34); " " & IIf(s.GetFormatSpecProperty(FormatStr, Invalid), "is NOT a valid formatSpec", "is a valid formatSpec with") & " the following properties:"
+    Debug.Print "   " & ".Invalid=" & s.GetFormatSpecProperty(FormatStr, Invalid)
+    Debug.Print "   " & ".ConversionChar=" & Chr(34) & s.GetFormatSpecProperty(FormatStr, ConversionChar) & Chr(34)
+    Debug.Print "   " & ".Fieldwidth=" & s.GetFormatSpecProperty(FormatStr, Fieldwidth)
+    Debug.Print "   " & ".Precision=" & s.GetFormatSpecProperty(FormatStr, Precision)
+    Debug.Print "   " & ".FlagLeftAlign=" & s.GetFormatSpecProperty(FormatStr, FlagLeftAlign)
+    Debug.Print "   " & ".FlagLeadingZeros=" & s.GetFormatSpecProperty(FormatStr, FlagLeadingZeros)
+    Debug.Print "   " & ".FlagSign=" & s.GetFormatSpecProperty(FormatStr, FlagSign)
+    Debug.Print "   " & ".FlagSpace=" & s.GetFormatSpecProperty(FormatStr, FlagSpace)
+    Debug.Print "   " & ".FlagHash=" & s.GetFormatSpecProperty(FormatStr, FlagHash)
+    Debug.Print "   " & ".Identifier=" & s.GetFormatSpecProperty(FormatStr, Identifier)
+    Debug.Print "   " & ".Identifier=" & Chr(34) & s.GetFormatSpecProperty(FormatStr, PadChar) & Chr(34)
+
+    FormatStr = "%-0+5.4f"
+    Debug.Print ""
+    Debug.Print "Format string """ & FormatStr & Chr(34); " " & IIf(s.GetFormatSpecProperty(FormatStr, Invalid), "is NOT a valid formatSpec", "is a valid formatSpec with") & " the following properties:"
+    Debug.Print "   " & ".Invalid=" & s.GetFormatSpecProperty(FormatStr, Invalid)
+    Debug.Print "   " & ".ConversionChar=" & Chr(34) & s.GetFormatSpecProperty(FormatStr, ConversionChar) & Chr(34)
+    Debug.Print "   " & ".Fieldwidth=" & s.GetFormatSpecProperty(FormatStr, Fieldwidth)
+    Debug.Print "   " & ".Precision=" & s.GetFormatSpecProperty(FormatStr, Precision)
+    Debug.Print "   " & ".FlagLeftAlign=" & s.GetFormatSpecProperty(FormatStr, FlagLeftAlign)
+    Debug.Print "   " & ".FlagLeadingZeros=" & s.GetFormatSpecProperty(FormatStr, FlagLeadingZeros)
+    Debug.Print "   " & ".FlagSign=" & s.GetFormatSpecProperty(FormatStr, FlagSign)
+    Debug.Print "   " & ".FlagSpace=" & s.GetFormatSpecProperty(FormatStr, FlagSpace)
+    Debug.Print "   " & ".FlagHash=" & s.GetFormatSpecProperty(FormatStr, FlagHash)
+    Debug.Print "   " & ".Identifier=" & s.GetFormatSpecProperty(FormatStr, Identifier)
+    Debug.Print "   " & ".Identifier=" & Chr(34) & s.GetFormatSpecProperty(FormatStr, PadChar) & Chr(34)
+
+    FormatStr = "%-0+.4f"
+    Debug.Print ""
+    Debug.Print "Format string """ & FormatStr & Chr(34); " " & IIf(s.GetFormatSpecProperty(FormatStr, Invalid), "is NOT a valid formatSpec", "is a valid formatSpec with") & " the following properties:"
+    Debug.Print "   " & ".Invalid=" & s.GetFormatSpecProperty(FormatStr, Invalid)
+    Debug.Print "   " & ".ConversionChar=" & Chr(34) & s.GetFormatSpecProperty(FormatStr, ConversionChar) & Chr(34)
+    Debug.Print "   " & ".Fieldwidth=" & s.GetFormatSpecProperty(FormatStr, Fieldwidth)
+    Debug.Print "   " & ".Precision=" & s.GetFormatSpecProperty(FormatStr, Precision)
+    Debug.Print "   " & ".FlagLeftAlign=" & s.GetFormatSpecProperty(FormatStr, FlagLeftAlign)
+    Debug.Print "   " & ".FlagLeadingZeros=" & s.GetFormatSpecProperty(FormatStr, FlagLeadingZeros)
+    Debug.Print "   " & ".FlagSign=" & s.GetFormatSpecProperty(FormatStr, FlagSign)
+    Debug.Print "   " & ".FlagSpace=" & s.GetFormatSpecProperty(FormatStr, FlagSpace)
+    Debug.Print "   " & ".FlagHash=" & s.GetFormatSpecProperty(FormatStr, FlagHash)
+    Debug.Print "   " & ".Identifier=" & s.GetFormatSpecProperty(FormatStr, Identifier)
+    Debug.Print "   " & ".Identifier=" & Chr(34) & s.GetFormatSpecProperty(FormatStr, PadChar) & Chr(34)
+
+    FormatStr = "%34$#.4f"
+    Debug.Print ""
+    Debug.Print "Format string """ & FormatStr & Chr(34); " " & IIf(s.GetFormatSpecProperty(FormatStr, Invalid), "is NOT a valid formatSpec", "is a valid formatSpec with") & " the following properties:"
+    Debug.Print "   " & ".Invalid=" & s.GetFormatSpecProperty(FormatStr, Invalid)
+    Debug.Print "   " & ".ConversionChar=" & Chr(34) & s.GetFormatSpecProperty(FormatStr, ConversionChar) & Chr(34)
+    Debug.Print "   " & ".Fieldwidth=" & s.GetFormatSpecProperty(FormatStr, Fieldwidth)
+    Debug.Print "   " & ".Precision=" & s.GetFormatSpecProperty(FormatStr, Precision)
+    Debug.Print "   " & ".FlagLeftAlign=" & s.GetFormatSpecProperty(FormatStr, FlagLeftAlign)
+    Debug.Print "   " & ".FlagLeadingZeros=" & s.GetFormatSpecProperty(FormatStr, FlagLeadingZeros)
+    Debug.Print "   " & ".FlagSign=" & s.GetFormatSpecProperty(FormatStr, FlagSign)
+    Debug.Print "   " & ".FlagSpace=" & s.GetFormatSpecProperty(FormatStr, FlagSpace)
+    Debug.Print "   " & ".FlagHash=" & s.GetFormatSpecProperty(FormatStr, FlagHash)
+    Debug.Print "   " & ".Identifier=" & s.GetFormatSpecProperty(FormatStr, Identifier)
+    Debug.Print "   " & ".Identifier=" & Chr(34) & s.GetFormatSpecProperty(FormatStr, PadChar) & Chr(34)
+
+    FormatStr = "%34$#.4f"
+    Debug.Print ""
+    Debug.Print "Format string """ & FormatStr & Chr(34); " " & IIf(s.GetFormatSpecProperty(FormatStr, Invalid), "is NOT a valid formatSpec", "is a valid formatSpec with") & " the following properties:"
+    Debug.Print "   " & ".Invalid=" & s.GetFormatSpecProperty(FormatStr, Invalid)
+    Debug.Print "   " & ".ConversionChar=" & Chr(34) & s.GetFormatSpecProperty(FormatStr, ConversionChar) & Chr(34)
+    Debug.Print "   " & ".Fieldwidth=" & s.GetFormatSpecProperty(FormatStr, Fieldwidth)
+    Debug.Print "   " & ".Precision=" & s.GetFormatSpecProperty(FormatStr, Precision)
+    Debug.Print "   " & ".FlagLeftAlign=" & s.GetFormatSpecProperty(FormatStr, FlagLeftAlign)
+    Debug.Print "   " & ".FlagLeadingZeros=" & s.GetFormatSpecProperty(FormatStr, FlagLeadingZeros)
+    Debug.Print "   " & ".FlagSign=" & s.GetFormatSpecProperty(FormatStr, FlagSign)
+    Debug.Print "   " & ".FlagSpace=" & s.GetFormatSpecProperty(FormatStr, FlagSpace)
+    Debug.Print "   " & ".FlagHash=" & s.GetFormatSpecProperty(FormatStr, FlagHash)
+    Debug.Print "   " & ".Identifier=" & s.GetFormatSpecProperty(FormatStr, Identifier)
+    Debug.Print "   " & ".Identifier=" & Chr(34) & s.GetFormatSpecProperty(FormatStr, PadChar) & Chr(34)
+
+End Sub
