@@ -126,7 +126,10 @@ Sub UnitTestSprintf()
     Args = Array("3.1415")
     ShouldPrint = "  3.14"
     Debug.Print ">>sprintf(""" & FormatStr & """, " & Array2Str(Args) & ") = " & Chr(34) & s.sprintf(FormatStr, Args) & Chr(34) & " (Should be """ & ShouldPrint & """)"
-    
+    FormatStr = "%s"
+    Args = Array("00000")
+    ShouldPrint = "00000"
+    Debug.Print ">>sprintf(""" & FormatStr & """, " & Array2Str(Args) & ") = " & Chr(34) & s.sprintf(FormatStr, Args) & Chr(34) & " (Should be """ & ShouldPrint & """)"
     Debug.Print ""
     
     
