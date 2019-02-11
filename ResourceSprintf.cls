@@ -13,7 +13,7 @@ Attribute VB_Exposed = False
 '             Project:  -
 '                Type:  Class module
 '              Author:  Daniel Edebro
-' Last (sign.) update:  2018-02-09
+' Last (sign.) update:  2019-02-09
 '         Description:  Mimics the C++-sprintf function that formats numbers in strings
 '
 ' Key Methods/Functions (*=public):
@@ -69,13 +69,15 @@ Option Explicit
 '
 ' MEMBER VARIABLES
 Public Enum EnumFormatSpecProperties
-    FormatSpecInvalid
-    LeftAlign
-    Sign
-    LeadingZeros
+    Invalid
+    ConversionChar
     Fieldwidth
     Precision
-    ConversionChar
+    FlagLeftAlign
+    FlagSign
+    FlagLeadingZeros
+    FlagHash
+    FlagSpace
     Identifier
     PadChar
 End Enum
@@ -413,22 +415,26 @@ Public Function GetFormatSpecProperty(ByVal FormatSpecString As String, FormatSp
     
     With FormatSpec
         Select Case FormatSpecProperty
+            Case Invalid
+                GetFormatSpecProperty = .Invalid
             Case ConversionChar
                 GetFormatSpecProperty = .ConversionChar
             Case Fieldwidth
                 GetFormatSpecProperty = .Fieldwidth
             Case Precision
                 GetFormatSpecProperty = .Precision
-            Case LeftAlign
-                GetFormatSpecProperty = .LeftAlign
-            Case Sign
-                GetFormatSpecProperty = .Sign
-            Case LeadingZeros
-                GetFormatSpecProperty = .LeadingZeros
-            Case FormatSpecInvalid
-                GetFormatSpecProperty = .FormatSpecInvalid
-            Case ConversionChar
-                GetFormatSpecProperty = .ConversionChar
+            Case FlagLeftAlign
+                GetFormatSpecProperty = .FlagLeftAlign
+            Case FlagSign
+                GetFormatSpecProperty = .FlagSign
+            Case FlagLeadingZeros
+                GetFormatSpecProperty = .FlagLeadingZeros
+            Case FlagHash
+                GetFormatSpecProperty = .FlagHash
+            Case FlagSpace
+                GetFormatSpecProperty = .FlagSpace
+            Case Identifier
+                GetFormatSpecProperty = .Identifier
             Case PadChar
                 GetFormatSpecProperty = .PadChar
             Case Else
