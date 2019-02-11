@@ -51,6 +51,8 @@ SIMPLE FORMAT CONVERSIONS
 >>sprintf("%X", 111) = "6F" (Should be "6F")
 >>sprintf("%g", 0.000001) = "1.0e-06" (Should be "1.0e-06")
 >>sprintf("%g", 0.01) = "0.01" (Should be "0.01")
+>>sprintf("%6.2f", "Hello") = " Hello" (Should be " Hello")
+>>sprintf("%6.2f", "3.1415") = "  3.14" (Should be "  3.14")
 
 >>sprintf("File%05d_%04d-%02d-%02d.%s", 3, 2019, 2, 10, "dat")
 "File00003_2019-02-10.dat"
