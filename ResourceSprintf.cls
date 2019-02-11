@@ -358,7 +358,7 @@ Private Function FormatNum(ByVal Value As Variant, ByRef FormatSpec As TFormatSp
                 FormatStr = IIf(.Precision = 0, "0", "0.") & String(.Precision, "0")
                 NumStr = Format(Value, SignPos & FormatStr & ";" & SignNeg & FormatStr)
             Case "s"
-                If .Precision <= 0 Then NumStr = Format(Value) Else NumStr = Left(Format(Value), .Precision)
+                If .Precision <= 0 Then NumStr = CStr(Value) Else NumStr = Left(CStr(Value), .Precision)
             Case "o", "x", "X"
                 If .ConversionChar = "o" And IsNumeric(Value) Then NumStr = Oct(CInt(Value))
                 If .ConversionChar = "x" And IsNumeric(Value) Then NumStr = Format(Hex(CInt(Value)), "<")
