@@ -348,8 +348,17 @@ Private Function FormatNum(ByVal Value As Variant, ByRef FormatSpec As TFormatSp
                     
                     If Len(NumStr2) < Len(NumStr) Then NumStr = NumStr2
                 Else  ' if precision is given then %f is shorter
-                    FormatStr = "0.0" & String(7, "#") & .ConversionChar & "+00"
+                    FormatStr = "0." & String(.Precision - 1, "0") & "e+00"
                     NumStr = Format(Value, SignPos & FormatStr & ";" & SignNeg & FormatStr)
+                    Value = CDbl(NumStr)
+                    ' convert back to value
+                    NumStr2 = CStr(Value)
+                    If Value = Int(Value) And .FlagHash = True Then NumStr2 = NumStr2 & "."
+                    
+                    If Len(NumStr2) < Len(NumStr) Then NumStr = NumStr2
+                    
+                    'FormatStr = "0.0" & String(7, "#")
+                    'NumStr = Format(Value, SignPos & FormatStr & ";" & SignNeg & FormatStr)
                 End If
                 
             Case "d", "i", "u"
