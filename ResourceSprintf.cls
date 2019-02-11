@@ -127,22 +127,15 @@ Public Function sprintf(ByVal Inputstring As String, ParamArray Values() As Vari
     cnt = 0
     i = 0
     
-    ' If no arguments are given
-    If UBound(Values) = -1 Then
-        'sprintf = Inputstring
-        'Exit Function
     ' If arguments are given as sprintf("Hello %s %d",Array("World", 2)) instead of
     ' sprintf("Hello %s %d", "World", 2)
-    ElseIf VarType(Values(0)) = vbArray + vbVariant Then
-        Values = Values(0)
-        If UBound(Values) = -1 Then
-            'sprintf = Inputstring
-            'Exit Function
-        End If
+    If UBound(Values) <> -1 Then
+        If VarType(Values(0)) = vbArray + vbVariant Then Values = Values(0)
     End If
     
-    ' Loop through InputString and search for "%". When found, continue looping
-    ' through InputString until a conversion character is found (d, f, s, e, etc)
+    ' Loop through InputString and search for trigger char "%" (or \). When found, continue looping
+    ' through InputString until a conversion character is found (d, f, s, e, etc). Send that string
+    ' to GetFormatSpec method. If Formatspec is valid this with from the formatted string that FormatNum method returns
     Do
         i = i + 1
         CharCur = Mid(Inputstring, i, 1)
@@ -214,7 +207,6 @@ Private Function GetFormatSpec(FormatSpec As String) As TFormatSpec
 ' Outputs:
 '         A UDT containing the properties of the format specification but easy to read
 '
-    'On Error GoTo errorHandler
     Dim SubStr As String
     Dim tmpVal As Double
     Dim Parts() As String
@@ -291,18 +283,6 @@ Private Function GetFormatSpec(FormatSpec As String) As TFormatSpec
 
 TheEnd:
     GetFormatSpec = Result
-
-    Exit Function
-'errorHandler:
-    'Debug.Print "Error in SetFormatSpec(""" & FormatSpec & """)"
-    'Debug.Print "   Number = " & CStr(err.Number) & ", descr=""" & err.Description & """"
-    'With Result
-    '    Debug.Print "   .ConversionChar = " & .ConversionChar
-    '    Debug.Print "   .Fieldwidth = " & CStr(.Fieldwidth)
-    '    Debug.Print "   .Precision = " & CStr(.Precision)
-    '    Debug.Print "   .LeftAlign = " & CStr(.LeftAlign)
-    'End With
-    'Stop
     
 End Function
 
@@ -415,30 +395,18 @@ Public Function GetFormatSpecProperty(ByVal FormatSpecString As String, FormatSp
     
     With FormatSpec
         Select Case FormatSpecProperty
-            Case Invalid
-                GetFormatSpecProperty = .Invalid
-            Case ConversionChar
-                GetFormatSpecProperty = .ConversionChar
-            Case Fieldwidth
-                GetFormatSpecProperty = .Fieldwidth
-            Case Precision
-                GetFormatSpecProperty = .Precision
-            Case FlagLeftAlign
-                GetFormatSpecProperty = .FlagLeftAlign
-            Case FlagSign
-                GetFormatSpecProperty = .FlagSign
-            Case FlagLeadingZeros
-                GetFormatSpecProperty = .FlagLeadingZeros
-            Case FlagHash
-                GetFormatSpecProperty = .FlagHash
-            Case FlagSpace
-                GetFormatSpecProperty = .FlagSpace
-            Case Identifier
-                GetFormatSpecProperty = .Identifier
-            Case PadChar
-                GetFormatSpecProperty = .PadChar
-            Case Else
-                GetFormatSpecProperty = "Unknown"
+            Case Invalid:           GetFormatSpecProperty = .Invalid
+            Case ConversionChar:    GetFormatSpecProperty = .ConversionChar
+            Case Fieldwidth:        GetFormatSpecProperty = .Fieldwidth
+            Case Precision:         GetFormatSpecProperty = .Precision
+            Case FlagLeftAlign:     GetFormatSpecProperty = .FlagLeftAlign
+            Case FlagSign:          GetFormatSpecProperty = .FlagSign
+            Case FlagLeadingZeros:  GetFormatSpecProperty = .FlagLeadingZeros
+            Case FlagHash:          GetFormatSpecProperty = .FlagHash
+            Case FlagSpace:         GetFormatSpecProperty = .FlagSpace
+            Case Identifier:        GetFormatSpecProperty = .Identifier
+            Case PadChar:           GetFormatSpecProperty = .PadChar
+            Case Else:              GetFormatSpecProperty = "Unknown"
         End Select
     End With
 End Function
