@@ -15,7 +15,7 @@ The second option is clearly much easier and it amazes me that every language do
 There are probably a tonne of these implementations out there but I needed something that could probe the format spec (the `%03d` code) and return the fieldwidth etc (`GetFormatSpecProperty`) and while doing that it was an easy step to do the whole function.
 
 # Usage
-Import this .cls file as a new Class module and instanciate it from your module using
+Import `ResourceSprintf.cls` as a new Class module and instanciate it from your module using:
 ```
 Dim s as New ResourceSprintf
 Debug.Print s.sprintf("%6.2f %6.2f", 1.23, 9.5)
