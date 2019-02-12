@@ -218,7 +218,7 @@ Private Function GetFormatSpec(FormatSpec As String) As TFormatSpec
         .Precision = -1  ' Means depends
     
         ' Check if basic requirement for a format string exists (starts with % and ends with proper conv.char)
-        If Left(FormatSpec, 1) <> "%" And InStr(1, CONVERSION_CHARS, Right(FormatSpec, 1)) = 0 Then
+        If Left(FormatSpec, 1) <> "%" Or InStr(1, CONVERSION_CHARS, Right(FormatSpec, 1)) = 0 Then
             .Invalid = True
             GoTo TheEnd
         End If
