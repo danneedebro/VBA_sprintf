@@ -273,8 +273,8 @@ Private Function GetFormatSpec(FormatSpec As String) As TFormatSpec
                 .Invalid = True
             End If
             SubStr = Parts(0)  ' Continue parsing the first part
-        Else    ' Parts(0) contains flags, no precision given
-            .Precision = 0
+        Else    ' Parts(0) contains flags, no precision given (ie -1)
+            '.Precision = -1
         End If
         
         ' Parse part before precision operator '.' looking for flags
@@ -346,7 +346,7 @@ Private Function FormatNum(ByVal Value As Variant, ByRef FormatSpec As TFormatSp
         Select Case .ConversionChar
             Case "f"
                 If .Precision = -1 Then   ' if precision not specified, %f  or %5f
-                    FormatStr = "0.0" & String(7, "#")
+                    FormatStr = "0." & String(8, "#")
                 Else
                     FormatStr = IIf(.Precision = 0, IIf(.FlagHash = True, "0.", "0"), "0.") & _
                                 String(.Precision, "0")
@@ -354,7 +354,7 @@ Private Function FormatNum(ByVal Value As Variant, ByRef FormatSpec As TFormatSp
                 NumStr = Format(Value, SignPos & FormatStr & ";" & SignNeg & FormatStr)
             Case "e", "E"
                 If .Precision = -1 Then
-                    FormatStr = "0.0" & String(7, "#") & .ConversionChar & "+00"
+                    FormatStr = "0." & String(8, "#") & .ConversionChar & "+00"
                 Else
                     FormatStr = IIf(.Precision = 0, IIf(.FlagHash = True, "0.", "0"), "0.") & _
                                 String(.Precision, "0") & .ConversionChar & "+00"
@@ -364,15 +364,19 @@ Private Function FormatNum(ByVal Value As Variant, ByRef FormatSpec As TFormatSp
                 If .Precision = -1 Then  ' If precision not given, try which of %e or %f is shorter
                     Dim NumStr2 As String
                     ' %f
-                    FormatStr = "0.0" & String(7, "#")
+                    FormatStr = "0." & String(8, "#")
                     NumStr = Format(Value, SignPos & FormatStr & ";" & SignNeg & FormatStr)
                     ' %e
-                    FormatStr = "0.0" & String(7, "#") & "e+00"
+                    FormatStr = "0." & String(8, "#") & "e+00"
                     NumStr2 = Format(Value, SignPos & FormatStr & ";" & SignNeg & FormatStr)
                     
                     If Len(NumStr2) < Len(NumStr) Then NumStr = NumStr2
                 Else  ' if precision is given then %f is shorter
-                    FormatStr = "0." & String(.Precision - 1, "0") & "e+00"
+                    If .Precision = 0 Then
+                        FormatStr = "0e+00"
+                    Else
+                        FormatStr = "0." & String(.Precision - 1, "0") & "e+00"
+                    End If
                     NumStr = Format(Value, SignPos & FormatStr & ";" & SignNeg & FormatStr)
                     Value = CDbl(NumStr)
                     ' convert back to value
