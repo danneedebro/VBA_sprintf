@@ -15,13 +15,37 @@ Sub UnitTestSprintf()
     Dim ShouldPrint As String
     Dim Args As Variant
     
+    Debug.Print "INPUT ARGS ON DIFFERENT FORMS"
+    Debug.Print ">>s.sprintf(""Hello %s %d"", ""World"", 2) = " & Chr(34) & s.sprintf("Hello %s %d", "World", 2) & Chr(34)
+    Debug.Print ""
+    Debug.Print ">>s.sprintf(""Hello %s %d"") = " & Chr(34) & s.sprintf("Hello %s %d") & Chr(34)
+    Debug.Print ""
+    Debug.Print ">>Args = Array(""Hello"", 2)"
+    Args = Array("World", 2)
+    Debug.Print ">>s.sprintf(""Hello %s %d"", Args) = " & Chr(34) & s.sprintf("Hello %s %d", Args) & Chr(34)
+    Debug.Print ""
+    Debug.Print ">>Args = Array()"
+    Args = Array()
+    Debug.Print ">>s.sprintf(""Hello %s %d"", Args) = " & Chr(34) & s.sprintf("Hello %s %d", Args) & Chr(34)
+    Debug.Print ""
+    Debug.Print ">>Dim MyArgs(3 To 4) As Variant"
+    Debug.Print ">>MyArgs(3) = ""World"""
+    Debug.Print ">>MyArgs(4) = 2"
+    Dim MyArgs(3 To 4) As Variant
+    MyArgs(3) = "World"
+    MyArgs(4) = 2
+    Debug.Print ">>s.sprintf(""Hello %s %d"", MyArgs) = " & Chr(34) & s.sprintf("Hello %s %d", MyArgs) & Chr(34)
+    Debug.Print ""
+    Debug.Print ""
+    
+    
+    
     ' ----------------------------------------------
     Debug.Print "SIMPLE FORMAT CONVERSIONS"
-    
+   
     FormatStr = "%s"
     Args = Array("World")
     ShouldPrint = "World"
-    
     Debug.Print ">>sprintf(""" & FormatStr & """, " & Array2Str(Args) & ") = " & Chr(34) & s.sprintf(FormatStr, Args) & Chr(34) & " (Should be """ & ShouldPrint & """)" & IIf(s.sprintf(FormatStr, Args) <> ShouldPrint, "-----CHECK VALUE-------", "")
     FormatStr = "%10s"
     Args = Array("World")
@@ -69,6 +93,10 @@ Sub UnitTestSprintf()
     Debug.Print ">>sprintf(""" & FormatStr & """, " & Array2Str(Args) & ") = " & Chr(34) & s.sprintf(FormatStr, Args) & Chr(34) & " (Should be """ & ShouldPrint & """)" & IIf(s.sprintf(FormatStr, Args) <> ShouldPrint, "-----CHECK VALUE-------", "")
     FormatStr = "%04d"
     Args = Array(23)
+    ShouldPrint = "0023"
+    Debug.Print ">>sprintf(""" & FormatStr & """, " & Array2Str(Args) & ") = " & Chr(34) & s.sprintf(FormatStr, Args) & Chr(34) & " (Should be """ & ShouldPrint & """)" & IIf(s.sprintf(FormatStr, Args) <> ShouldPrint, "-----CHECK VALUE-------", "")
+    FormatStr = "%04d"
+    Args = Array("23")
     ShouldPrint = "0023"
     Debug.Print ">>sprintf(""" & FormatStr & """, " & Array2Str(Args) & ") = " & Chr(34) & s.sprintf(FormatStr, Args) & Chr(34) & " (Should be """ & ShouldPrint & """)" & IIf(s.sprintf(FormatStr, Args) <> ShouldPrint, "-----CHECK VALUE-------", "")
     FormatStr = "%-04d"
@@ -150,6 +178,10 @@ Sub UnitTestSprintf()
     FormatStr = "%#.2g"
     Args = Array(1234)
     ShouldPrint = "1200."
+    Debug.Print ">>sprintf(""" & FormatStr & """, " & Array2Str(Args) & ") = " & Chr(34) & s.sprintf(FormatStr, Args) & Chr(34) & " (Should be """ & ShouldPrint & """)" & IIf(s.sprintf(FormatStr, Args) <> ShouldPrint, "-----CHECK VALUE-------", "")
+    FormatStr = "%#f"
+    Args = Array(15)
+    ShouldPrint = "15."
     Debug.Print ">>sprintf(""" & FormatStr & """, " & Array2Str(Args) & ") = " & Chr(34) & s.sprintf(FormatStr, Args) & Chr(34) & " (Should be """ & ShouldPrint & """)" & IIf(s.sprintf(FormatStr, Args) <> ShouldPrint, "-----CHECK VALUE-------", "")
     
     Debug.Print ""
@@ -250,26 +282,8 @@ Sub UnitTestSprintf()
     Debug.Print Chr(34) & ShouldPrint & Chr(34) & "(Should be)" & " Note: if error string returned it would be ""The bank rate is 15<ERROR> rising"""
     Debug.Print ""
     
-    
-    ' ----------------------------------------------
-    Debug.Print "INPUT ARGS ON DIFFERENT FORMS"
-    
-    FormatStr = "Hello %d the %s"
-    Args = Array(2, "World")
-    ShouldPrint = "Hello 2 the World"
-    Debug.Print ">>Args = Array(2, ""World"")"
-    Debug.Print ">>sprintf(""" & FormatStr & """, Args)"
-    Debug.Print Chr(34) & s.sprintf(FormatStr, Args) & Chr(34)
-    Debug.Print Chr(34) & ShouldPrint & Chr(34) & "(Should be)"
-    Debug.Print ""
-    
-    FormatStr = "Hello %d the %s"
-    Args = Array(2, "World")
-    ShouldPrint = "Hello 2 the World"
-    Debug.Print ">>sprintf(""" & FormatStr & """, 2, ""World"")"
-    Debug.Print Chr(34) & s.sprintf(FormatStr, 2, "World") & Chr(34)
-    Debug.Print Chr(34) & ShouldPrint & Chr(34) & "(Should be)"
-    Debug.Print ""
+  
+
     
 End Sub
 
@@ -404,6 +418,21 @@ Sub UnitTestGetFormatSpecProperty()
     Debug.Print "   " & ".PadChar=" & Chr(34) & s.GetFormatSpecProperty(FormatStr, PadChar) & Chr(34)
 
     FormatStr = "%34$#.4f"
+    Debug.Print ""
+    Debug.Print "Format string """ & FormatStr & Chr(34); " " & IIf(s.GetFormatSpecProperty(FormatStr, Invalid), "is NOT a valid formatSpec", "is a valid formatSpec with") & " the following properties:"
+    Debug.Print "   " & ".Invalid=" & s.GetFormatSpecProperty(FormatStr, Invalid)
+    Debug.Print "   " & ".ConversionChar=" & Chr(34) & s.GetFormatSpecProperty(FormatStr, ConversionChar) & Chr(34)
+    Debug.Print "   " & ".Fieldwidth=" & s.GetFormatSpecProperty(FormatStr, Fieldwidth)
+    Debug.Print "   " & ".Precision=" & s.GetFormatSpecProperty(FormatStr, Precision)
+    Debug.Print "   " & ".FlagLeftAlign=" & s.GetFormatSpecProperty(FormatStr, FlagLeftAlign)
+    Debug.Print "   " & ".FlagLeadingZeros=" & s.GetFormatSpecProperty(FormatStr, FlagLeadingZeros)
+    Debug.Print "   " & ".FlagSign=" & s.GetFormatSpecProperty(FormatStr, FlagSign)
+    Debug.Print "   " & ".FlagSpace=" & s.GetFormatSpecProperty(FormatStr, FlagSpace)
+    Debug.Print "   " & ".FlagHash=" & s.GetFormatSpecProperty(FormatStr, FlagHash)
+    Debug.Print "   " & ".Identifier=" & s.GetFormatSpecProperty(FormatStr, Identifier)
+    Debug.Print "   " & ".PadChar=" & Chr(34) & s.GetFormatSpecProperty(FormatStr, PadChar) & Chr(34)
+    
+    FormatStr = "%34$#.4y"
     Debug.Print ""
     Debug.Print "Format string """ & FormatStr & Chr(34); " " & IIf(s.GetFormatSpecProperty(FormatStr, Invalid), "is NOT a valid formatSpec", "is a valid formatSpec with") & " the following properties:"
     Debug.Print "   " & ".Invalid=" & s.GetFormatSpecProperty(FormatStr, Invalid)
