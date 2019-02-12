@@ -114,7 +114,7 @@ Private Const CONVERSION_FLAGS = "-+ 0#"  ' - = Left-justify, + = always-print-p
 '
 '
 ' STATIC METHODS
-Public Function sprintf(ByVal Inputstring As String, ParamArray Values() As Variant) As String
+Public Function sprintf(ByVal Inputstring As String, ParamArray Args() As Variant) As String
 ' Action: Public function that given a value (or string) formats it according to a
 '         sprintf-type format specification string (%4.2f, %03d, etc)
     Dim i As Integer, j As Integer
@@ -127,15 +127,39 @@ Public Function sprintf(ByVal Inputstring As String, ParamArray Values() As Vari
     cnt = 0
     i = 0
     
-    ' If arguments are given as sprintf("Hello %s %d",Array("World", 2)) instead of
-    ' sprintf("Hello %s %d", "World", 2)
-    If UBound(Values) <> -1 Then
-        If VarType(Values(0)) = vbArray + vbVariant Then Values = Values(0)
+    ' Copy Values in Args to Values because Args take on different forms dep on input:
+    ' sprintf("Hello %s %d", "World", 2)  -> Args(0)="World", Args(1)=2
+    ' sprintf("Hello %s %d")              -> Args = Missing
+    ' Args=Array("Hello", 2)
+    ' sprintf("Hello %s %d", Args)        -> Args(0)(0)="World", Args(0)(1)=2
+    ' Args=Array()
+    ' sprintf("Hello %s %d", Args)        -> Args(0) = Missing
+    Dim Values() As Variant
+    Dim NoArgs As Boolean
+    
+    If IsMissing(Args) Then
+        NoArgs = True
+    ElseIf VarType(Args(0)) = vbArray + vbVariant Then
+        If IsMissing(Args(0)) = True Then
+            NoArgs = True
+        Else
+            ReDim Values(UBound(Args(0)) - LBound(Args(0)))
+            For i = 0 To UBound(Values)
+                Values(i) = Args(0)(LBound(Args(0)) + i)
+            Next i
+        End If
+    Else
+        ReDim Values(UBound(Args))
+        For i = 0 To UBound(Values)
+            Values(i) = Args(i)
+        Next i
     End If
+
     
     ' Loop through InputString and search for trigger char "%" (or \). When found, continue looping
     ' through InputString until a conversion character is found (d, f, s, e, etc). Send that string
     ' to GetFormatSpec method. If Formatspec is valid this with from the formatted string that FormatNum method returns
+    i = 0
     Do
         i = i + 1
         CharCur = Mid(Inputstring, i, 1)
@@ -145,7 +169,7 @@ Public Function sprintf(ByVal Inputstring As String, ParamArray Values() As Vari
                 CharCur = Mid(Inputstring, j, 1)
                 
                 ' If conversion character read ("d", "f", "e", "E", "s", etc)
-                If CharTrigger = "%" And InStr(1, CONVERSION_CHARS, CharCur) > 0 Then
+                If CharTrigger = "%" And InStr(1, CONVERSION_CHARS, CharCur) > 0 And NoArgs = False Then
                     FormatSpecStr = Mid(Inputstring, i, j - i + 1)
                     
                     ' Parse the format spec using GetFormatSpec
