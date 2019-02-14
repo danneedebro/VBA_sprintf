@@ -380,12 +380,9 @@ Private Function FormatNum(ByVal Value As Variant, ByRef FormatSpec As TFormatSp
                     NumStr = Format(Value, SignPos & FormatStr & ";" & SignNeg & FormatStr)
                     
                     NumStr2 = NumberOfSignificantDigits(Value, .Precision, AlwaysPlotDecimalPoint:=.FlagHash, AlwaysPlotPlusSign:=.FlagSign)
-                    'If Value = Int(Value) And .FlagHash = True Then NumStr2 = NumStr2 & "."
-                    
+                                        
                     If Len(NumStr2) < Len(NumStr) Then NumStr = NumStr2
                     
-                    'FormatStr = "0.0" & String(7, "#")
-                    'NumStr = Format(Value, SignPos & FormatStr & ";" & SignNeg & FormatStr)
                 End If
                 
             Case "d", "i", "u"
