@@ -378,10 +378,9 @@ Private Function FormatNum(ByVal Value As Variant, ByRef FormatSpec As TFormatSp
                         FormatStr = "0." & String(.Precision - 1, "0") & "e+00"
                     End If
                     NumStr = Format(Value, SignPos & FormatStr & ";" & SignNeg & FormatStr)
-                    Value = CDbl(NumStr)
-                    ' convert back to value
-                    NumStr2 = CStr(Value)
-                    If Value = Int(Value) And .FlagHash = True Then NumStr2 = NumStr2 & "."
+                    
+                    NumStr2 = NumberOfSignificantDigits(Value, .Precision, AlwaysPlotDecimalPoint:=.FlagHash, AlwaysPlotPlusSign:=.FlagSign)
+                    'If Value = Int(Value) And .FlagHash = True Then NumStr2 = NumStr2 & "."
                     
                     If Len(NumStr2) < Len(NumStr) Then NumStr = NumStr2
                     
@@ -446,6 +445,41 @@ Public Function GetFormatSpecProperty(ByVal FormatSpecString As String, FormatSp
             Case Else:              GetFormatSpecProperty = "Unknown"
         End Select
     End With
+End Function
+
+Function NumberOfSignificantDigits(ByVal Value As Variant, ByVal SignificantDigits As Integer, _
+                                   Optional ByVal AlwaysPlotDecimalPoint As Boolean = False, _
+                                   Optional ByVal AlwaysPlotPlusSign As Boolean = False) As String
+' Action: Returns a string with Value formatted with N significant digits
+'
+    Dim Exponent As Integer, Coeff As String
+    Dim NumStr As String
+
+    ' If value not numeric, return Value as string
+    If IsNumeric(Value) = False Then
+        NumberOfSignificantDigits = CStr(Value)
+        Exit Function
+    End If
+    
+    NumStr = Format(CDbl(Value), "+" & String(SignificantDigits, "0") & "e+00;-" & String(SignificantDigits, "0") & "e+00")
+    
+    ' Parse out exponent and coeff and pad coeff with zeros  coeff*10^exponent
+    Exponent = CInt(Right(NumStr, 3))
+    Coeff = Left(NumStr, SignificantDigits + 1)
+    
+    ' If exponent negative, shift decimal point as many steps as the exponent
+    If Exponent < 0 Then
+        Coeff = Format(Coeff, String(Abs(Exponent) + 1, "0"))
+        NumStr = Left(Coeff, Len(Coeff) + Exponent) & "." & Right(Coeff, Abs(Exponent))
+    ' If exponent positive, add as many zeros as the exponent
+    ElseIf Exponent > 0 Then
+        NumStr = IIf(AlwaysPlotPlusSign = True, Coeff, Format(Coeff)) & String(Exponent, "0") & IIf(AlwaysPlotDecimalPoint = True, ".", "")
+    ' If exponent = 0 then do nothing (or add decimal point)
+    Else
+        NumStr = IIf(AlwaysPlotPlusSign = True, Coeff, Format(Coeff)) & IIf(AlwaysPlotDecimalPoint = True, ".", "")
+    End If
+    
+    NumberOfSignificantDigits = NumStr
 End Function
 '
 '
